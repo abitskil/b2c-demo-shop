@@ -11,12 +11,12 @@ jobs:
       CODEBUILD_BUILD_ID: ${{ github.event.client_payload.CODEBUILD_BUILD_ID }}
       DEMO_SHOP_TYPE: ${{ github.event.client_payload.DEMO_SHOP_TYPE }}
       NPM_COMMAND: ${{ github.event.client_payload.NPM_COMMAND }}
-      SPRYKER_BE_HOST: ${{ secrets.BASIC_AUTH_CREDENTIALS }}@${{ github.event.client_payload.SPRYKER_BE_HOST }}
-      SPRYKER_MP_HOST: ${{ secrets.BASIC_AUTH_CREDENTIALS }}@${{ github.event.client_payload.SPRYKER_MP_HOST }}
+      SPRYKER_BE_HOST: ${{ github.event.client_payload.SPRYKER_BE_HOST }}
+      SPRYKER_MP_HOST: ${{ github.event.client_payload.SPRYKER_MP_HOST }}
       SPRYKER_API_HOST: ${{ github.event.client_payload.SPRYKER_API_HOST }}
       SPRYKER_GLUE_BACKEND_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_BACKEND_HOST }}
       SPRYKER_GLUE_STOREFRONT_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_STOREFRONT_HOST }}
-      SPRYKER_FE_HOST: cloud:cloud@${{ github.event.client_payload.SPRYKER_FE_HOST }}
+      SPRYKER_FE_HOST: ${{ github.event.client_payload.SPRYKER_FE_HOST }}
       SPRYKER_SSL_ENABLED: https
       SPRYKER_SMTP_HOST: false
       AWS_DEFAULT_REGION: eu-west-1
@@ -38,7 +38,6 @@ jobs:
         run: |
           curl -sS https://getcomposer.org/installer | php
           sudo mv composer.phar /usr/local/bin/composer
-          echo $SPRYKER_FE_HOST
 
       - name: Download spryker/cypress-tests package
         run: composer require spryker/cypress-tests:dev-feature/cc-33306/dev-autonomous-release-post-hook
