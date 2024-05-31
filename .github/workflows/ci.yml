@@ -42,4 +42,5 @@ jobs:
 
       - name: Execute post-deploy-workflow-handler.sh script
         run: |
-          bash vendor/spryker/cypress-tests/post-deploy-workflow/post-deploy-workflow-handler.sh
+          cd vendor/spryker/cypress-tests/post-deploy-workflow
+          bash post-deploy-workflow-handler.sh
