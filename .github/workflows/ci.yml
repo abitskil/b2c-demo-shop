@@ -38,6 +38,7 @@ jobs:
         run: |
           curl -sS https://getcomposer.org/installer | php
           sudo mv composer.phar /usr/local/bin/composer
+          echo $SPRYKER_FE_HOST
 
       - name: Download spryker/cypress-tests package
         run: composer require spryker/cypress-tests:dev-feature/cc-33306/dev-autonomous-release-post-hook
