@@ -18,32 +18,29 @@ jobs:
       SPRYKER_API_HOST: ${{ github.event.client_payload.SPRYKER_API_HOST }}
       SPRYKER_GLUE_BACKEND_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_BACKEND_HOST }}
       SPRYKER_GLUE_STOREFRONT_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_STOREFRONT_HOST }}
-      SPRYKER_FE_HOST: ${{ github.event.client_payload.SPRYKER_FE_HOST }}
+      SPRYKER_FE_HOST: ${{secrets.BASIC_AUTH_CREDENTIALS}}${{ github.event.client_payload.SPRYKER_FE_HOST }}
       SPRYKER_SSL_ENABLED: https
       SPRYKER_SMTP_HOST: false
       AWS_DEFAULT_REGION: eu-west-1
       AWS_ACCESS_KEY_ID: ${{ secrets.ROBOT_TESTS_ARTIFACTS_KEY }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.ROBOT_TESTS_ARTIFACTS_SECRET }}
       ROBOT_TESTS_ARTIFACTS_BUCKET: ${{ vars.ROBOT_TESTS_ARTIFACTS_BUCKET }}
-      BASIC_AUTH_CREDENTIALS: ${{vars.BASIC}}
 
     steps:
       - name: Install Docker Compose
         run: |
           # sudo curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
           # sudo chmod +x /usr/local/bin/docker-compose
-          
-          echo $BASIC_AUTH_CREDENTIALS
+    
+      - name: Install Composer
+        run: |
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
 
-      # - name: Install Composer
-      #   run: |
-      #     curl -sS https://getcomposer.org/installer | php
-      #     sudo mv composer.phar /usr/local/bin/composer
+      - name: Download spryker/cypress-tests package
+        run: composer require spryker/cypress-tests:dev-feature/cc-33306/dev-autonomous-release-post-hook
 
-      # - name: Download spryker/cypress-tests package
-      #   run: composer require spryker/cypress-tests:dev-feature/cc-33306/dev-autonomous-release-post-hook
-
-      # - name: Execute post-deploy-workflow-handler.sh script
-      #   run: |
-      #     cd vendor/spryker/cypress-tests/post-deploy-workflow
-      #     bash post-deploy-workflow-handler.sh
+      - name: Execute post-deploy-workflow-handler.sh script
+        run: |
+          cd vendor/spryker/cypress-tests/post-deploy-workflow
+          bash post-deploy-workflow-handler.sh
