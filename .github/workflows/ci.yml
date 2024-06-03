@@ -18,7 +18,7 @@ jobs:
       SPRYKER_API_HOST: ${{ github.event.client_payload.SPRYKER_API_HOST }}
       SPRYKER_GLUE_BACKEND_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_BACKEND_HOST }}
       SPRYKER_GLUE_STOREFRONT_HOST: ${{ github.event.client_payload.SPRYKER_GLUE_STOREFRONT_HOST }}
-      SPRYKER_FE_HOST: ${{ github.event.client_payload.SPRYKER_FE_HOST }}
+      SPRYKER_FE_HOST: ${{"cloud:cloud@"}}${{ github.event.client_payload.SPRYKER_FE_HOST }}
       SPRYKER_SSL_ENABLED: https
       SPRYKER_SMTP_HOST: false
       AWS_DEFAULT_REGION: eu-west-1
