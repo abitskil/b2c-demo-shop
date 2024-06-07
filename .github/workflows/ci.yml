@@ -19,11 +19,11 @@ jobs:
                   git config user.email "github-actions@github.com"
 
             - name: Get the latest tag
-              run: echo "latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
+              run: |
+                  echo "latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
 
             - name: Get the current tag on master-deploy
               run: |
-                  git fetch --tags
                   current_tag=$(git describe --tags --abbrev=0)
                   echo "current_tag=${current_tag}" >> $GITHUB_ENV
 
