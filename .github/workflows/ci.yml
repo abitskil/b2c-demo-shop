@@ -24,10 +24,10 @@ jobs:
 
             - name: Get the current tag on master-deploy
               run: |
-                  git fetch --all
+                  git fetch master-deploy
                   git checkout master-deploy
                   current_tag=$(git describe --tags --abbrev=0)
-                  echo "current_tag=${current_tag}" >> $GITHUB_ENV
+                  echo "current_tag=${current_tag}" >> $GITHUB_EN
 
             - name: Compare tags
               run: |
@@ -40,10 +40,11 @@ jobs:
                     echo "up_merge_is_required=true" >> $GITHUB_ENV
                   else
                     echo "up_merge_is_required=false" >> $GITHUB_ENV
+                  fi
 
-            - name: Check if the latest tag is higher
+            - name: Check if the latest tag is newer than the current tag on master-deploy
               if: env.up_merge_is_required == 'false'
-              run: echo "Latest tag is not higher than the current tag on master-deploy. Skipping merge!"
+              run: echo "Latest tag is not newer than the current tag on master-deploy. Skipping merge!"
 
             - name: Merge latest tag to master-deploy
               if: env.up_merge_is_required == 'true'
