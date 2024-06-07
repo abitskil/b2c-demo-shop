@@ -24,6 +24,7 @@ jobs:
 
             - name: Get the current tag on master-deploy
               run: |
+                  git checkout master-deploy
                   current_tag=$(git describe --tags --abbrev=0)
                   echo "current_tag=${current_tag}" >> $GITHUB_ENV
 
@@ -46,7 +47,6 @@ jobs:
             - name: Merge latest tag to master-deploy
               if: env.up_merge_is_required == 'true'
               run: |
-                  git checkout master-deploy
                   git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy"
               continue-on-error: true
 
