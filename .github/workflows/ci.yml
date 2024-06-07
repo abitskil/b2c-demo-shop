@@ -29,7 +29,7 @@ jobs:
                   current_tag=$(git describe --tags --abbrev=0)
                   echo "current_tag=${current_tag}" >> $GITHUB_EN
 
-            - name: Compare tags
+            - name: Compare release tags
               run: |
                   latest_tag="${{ env.latest_tag }}"
                   current_tag="${{ env.current_tag }}"
