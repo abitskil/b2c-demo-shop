@@ -51,7 +51,7 @@ jobs:
       - name: Attempt to merge latest tag to master-deploy
         if: env.up_merge_is_required == 'true'
         run: |
-          git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy" --allow-unrelated-histories
+          git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy"
         continue-on-error: true
 
       - name: Check for merge conflicts
