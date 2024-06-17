@@ -53,6 +53,18 @@ jobs:
                   git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy" --allow-unrelated-histories
               continue-on-error: true
 
+            - name: Check for merge conflicts
+              if: env.up_merge_is_required == 'true'
+              run: |
+                  if git ls-files -u | grep -q 'composer.json\|composer.lock'; then
+                    echo "Merge conflict in composer.json or composer.lock"
+                    exit 1
+                  else
+                    git checkout --theirs .
+                    git add .
+                    git commit -m "Resolved conflicts using theirs except for composer.json/composer.lock"
+                  fi
+
 #            - name: Notify Slack on Failure
 #              if: failure()
 #              uses: slackapi/slack-github-action@v1.26.0
