@@ -65,6 +65,13 @@ jobs:
                     git commit -m "Resolved conflicts using theirs except for composer.json/composer.lock"
                   fi
 
+            - name: Push changes
+              if: env.up_merge_is_required == 'true'
+              run: |
+                  git push origin master-deploy
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 #            - name: Notify Slack on Failure
 #              if: failure()
 #              uses: slackapi/slack-github-action@v1.26.0
