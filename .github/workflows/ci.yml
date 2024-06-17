@@ -62,7 +62,7 @@ jobs:
                   else
                     git checkout --theirs .
                     git add .
-                    git commit -m "Resolved conflicts using theirs except for composer.json/composer.lock"
+                    git commit -m "Merge tag ${{ env.latest_tag }} into master-deploy and resolved conflicts using theirs strategy."
                   fi
 
             - name: Push changes
