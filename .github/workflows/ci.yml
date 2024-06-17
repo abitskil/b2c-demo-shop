@@ -50,7 +50,7 @@ jobs:
             - name: Merge latest tag to master-deploy
               if: env.up_merge_is_required == 'true'
               run: |
-                  git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy"
+                  git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy" --allow-unrelated-histories
               continue-on-error: true
 
 #            - name: Notify Slack on Failure
