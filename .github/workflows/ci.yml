@@ -28,7 +28,6 @@ jobs:
       - name: Get the current tag on master-deploy
         run: |
           git checkout master-deploy
-          git pull 
           current_tag=$(git describe --tags --abbrev=0)
           echo "current_tag=$current_tag" >> $GITHUB_ENV
 
@@ -52,10 +51,11 @@ jobs:
       - name: Attempt to merge latest tag to master-deploy
         if: env.up_merge_is_required == 'true'
         run: |
-          git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy" --allow-unrelated-histories || true
+          git merge ${{ env.latest_tag }} -m "Merge tag ${{ env.latest_tag }} into master-deploy" --allow-unrelated-histories
+        continue-on-error: true
 
       - name: Check for merge conflicts
-        if: env.up_merge_is_required == 'true'
+        if: failure() && env.up_merge_is_required == 'true'
         run: |
           if git ls-files -u | grep -q 'composer.json\|composer.lock'; then
             echo "Merge conflict in composer.json or composer.lock"
@@ -67,7 +67,7 @@ jobs:
           fi
 
       - name: Push changes
-        if: env.up_merge_is_required == 'true'
+        if: success() && env.up_merge_is_required == 'true'
         run: |
           git push origin master-deploy
         env:
