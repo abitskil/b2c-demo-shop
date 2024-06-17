@@ -76,15 +76,17 @@ jobs:
       - name: Notify Slack on Failure
         if: failure()
         uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           slack-message: "❌Failed to merge tag ${{ env.latest_tag }} into master-deploy. Manual intervention is required! \n*Details*: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
       - name: Notify Slack on Success
         if: success()
         uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           slack-message: "✅Successfully merged tag ${{ env.latest_tag }} into master-deploy. The deployment will be triggered shortly."
