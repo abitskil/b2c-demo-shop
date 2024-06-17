@@ -27,6 +27,7 @@ jobs:
                   git fetch origin master-deploy
                   git fetch --tags
                   git checkout master-deploy
+                  git pull 
                   current_tag=$(git describe --tags --abbrev=0)
                   echo "current_tag=${current_tag}" >> $GITHUB_ENV
 
